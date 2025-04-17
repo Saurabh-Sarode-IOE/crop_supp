@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Cure - Upload Image</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo" data-aos="fade-right">
+            <span>Agri-Cure</span>
+        </div>
+        <div class="menu-icon" onclick="toggleMenu()" data-aos="fade-left">
+            <ul class="menu">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('organic') }}">Products</a></li>
+            </ul>
+        </div>
+        <div id="google_translate_element" style="margin-left: auto; padding: 10px;"></div>
+        
+    </nav>
+
+    <div class="upload_instruction_section">
+        <div class="upload-container">
+            <div class="upload-section">
+                <h2>Upload your file</h2>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <label for="fileUpload" class="file-upload-label">Choose File</label>
+                    <input type="file" id="fileUpload" name="file" accept="image/*">
+                </form>
+                <div class="image-preview">
+                    <div id="altText">No image uploaded</div>
+                    <img id="previewImg" src="{{ url_for('static', filename='uploads/placeholder.png') }}" alt="Image Preview">
+                </div>
+                <button id="submitBtn">Submit</button>
+            </div>
+            <div class="instructions">
+                <h2>Instructions:</h2>
+                <div class="instruction-list">
+                    <div class="instruction-item">
+                        <img src="{{ url_for('static', filename='images/demo1.jpg') }}" alt="Leaf Image">
+                        <p>Affected part of the leaf should be visible</p>
+                    </div>
+                    <div class="instruction-item">
+                        <img src="{{ url_for('static', filename='images/demo2.jpeg') }}" alt="Leaf Quality">
+                        <p>Photo quality should be decent</p>
+                    </div>
+                    <div class="instruction-item">
+                        <img src="{{ url_for('static', filename='images/demo3.jpeg') }}" alt="Leaf Background">
+                        <p>Leaf should be single/differentiable from the background</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="result-container" id="result" style="display: none;">
+        <div id="resultSection">
+            <h1>Prediction Result :</h1>
+            <p><strong>Name:</strong> <span id="diseaseName"></span></p>
+            <p><strong>Symptoms:</strong> <span id="diseaseSymptoms"></span></p>
+            <p><strong>Causes:</strong> <span id="diseaseCauses"></span></p>
+            <p><strong>Cure:</strong> <span id="diseaseCure"></span></p>
+            <p><strong>Confidence:</strong> <span id="diseaseConfidence"></span></p>
+        </div>
+
+        <div id="supplementSection" class="supplement-section" style="display: none;">
+            <h2>Recommended Treatment:</h2>
+            <img id="supplementImage" src=" " alt="Supplement Image" width="150" style="margin: 0 auto">
+            <div class="supplement-card">
+                <p><strong id="treatmentName"></strong></p>
+                <a id="purchaseLink" href="#" target="_blank">
+                    <button class="buy-button">Buy Product</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function changeLanguage() {
+            let lang = document.getElementById("languageSelect").value;
+            let translateElement = document.querySelector(".goog-te-combo");
+            if (translateElement) {
+                translateElement.value = lang;
+                translateElement.dispatchEvent(new Event("change"));
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('fileUpload').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                const previewImg = document.getElementById('previewImg');
+                const altText = document.getElementById('altText');
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImg.src = e.target.result;
+                        previewImg.style.display = 'block';
+                        altText.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    previewImg.style.display = 'none';
+                    altText.style.display = 'block';
+                }
+            });
+
+            document.getElementById("submitBtn").addEventListener("click", function () {
+                let fileInput = document.getElementById("fileUpload");
+
+                if (!fileInput || fileInput.files.length === 0) {
+                    alert("Please upload an image first.");
+                    return;
+                }
+
+                let formData = new FormData();
+                formData.append("file", fileInput.files[0]);
+
+                fetch("/upload-image", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Received Response:", data);
+
+                    if (data.error) {
+                        alert("Error: " + data.error);
+                        return;
+                    }
+
+                    document.getElementById("diseaseName").innerText = data.Name || "N/A";
+                    document.getElementById("diseaseSymptoms").innerText = data.Symptoms || "N/A";
+                    document.getElementById("diseaseCauses").innerText = data.Causes || "N/A";
+                    document.getElementById("diseaseCure").innerText = data.Cure || "N/A";
+                    document.getElementById("diseaseConfidence").innerText = data.Confidence || "N/A";
+
+                    if (data.Fungicide) {
+                        document.getElementById("treatmentName").innerText = data.Fungicide;
+                        document.getElementById("purchaseLink").href = data.Fungicide_URL || "#";
+                        document.getElementById("purchaseLink").style.display = "inline";
+                        document.getElementById("supplementSection").style.display = "block";
+                    } else {
+                        document.getElementById("supplementSection").style.display = "none";
+                    }
+
+                    let supplementImage = document.getElementById("supplementImage");
+                    if (data.Supplement_Image) {
+                        supplementImage.src = data.Supplement_Image;
+                        supplementImage.style.display = "block";
+                    } else {
+                        supplementImage.style.display = "none";
+                    }
+
+                    document.getElementById("result").style.display = "block";
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Something went wrong. Please try again.");
+                });
+            });
+        });
+    </script>
+</body>
+</html>

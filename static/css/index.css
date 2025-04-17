@@ -1,0 +1,213 @@
+/* ========== General Page Styling ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    animation: fadeIn 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========== Navbar ========== */
+.navbar {
+    width: 100%;
+    height: 65px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    justify-content: space-between;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Navbar Scroll Effect */
+.navbar.scrolled {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+/* Logo */
+.logo {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #00e676;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+/* ========== Menu Styling ========== */
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: color 0.3s, transform 0.3s;
+    border-radius: 8px;
+    position: relative;
+}
+
+/* Hover Glow Effect */
+.menu a:hover {
+    color: #00e676;
+    transform: translateY(-2px);
+}
+
+/* Mobile Menu */
+@media (max-width: 800px) {
+    .menu {
+        position: absolute;
+        top: 65px;
+        right: 0;
+        width: 200px;
+        background: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        text-align: center;
+        display: none;
+        border-radius: 8px;
+    }
+
+    .menu.open {
+        display: flex;
+    }
+
+    .menu a {
+        display: block;
+        padding: 12px;
+    }
+}
+
+/* ========== Main Content Styling ========== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    margin-top: 100px;
+    padding: 80px 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideUp 1s ease-in-out;
+}
+
+/* Headings */
+.container h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #00e676;
+    margin-bottom: 20px;
+}
+
+/* Paragraphs */
+.container p {
+    font-size: 1.3rem;
+    color: #eee;
+    line-height: 1.8;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+/* ========== Animated Button ========== */
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 30px;
+    background: linear-gradient(135deg, #00c853, #009688);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+    animation: pulse 2s infinite;
+}
+
+/* Button Hover Effect */
+.button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(0, 255, 127, 0.5);
+}
+
+/* Glowing Effect */
+.button::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    transition: opacity 0.6s;
+}
+
+.button:hover::before {
+    opacity: 0;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* ========== Responsive Design ========== */
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+        padding: 50px 20px;
+    }
+
+    .container h1 {
+        font-size: 2.2rem;
+    }
+
+    .container p {
+        font-size: 1.1rem;
+    }
+}
+
+/* ========== Keyframes ========== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== JavaScript for Navbar Scroll Effect ==========
+document.addEventListener("scroll", function() {
+    const navbar = document.querySelector(".navbar");
+    if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+    } else {
+        navbar.classList.remove("scrolled");
+    }
+}); */

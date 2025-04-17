@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Cure</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body onload="AOS.init();">
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo" data-aos="fade-right">
+            <span id="logo-text">Agri-Cure</span>
+        </div>
+        <div class="menu-icon" onclick="toggleMenu()" data-aos="fade-left">
+            <ul class="menu">
+                <li><a href="{{ url_for('index') }}" class="translate" data-key="home">Home</a></li> 
+                <li><a href="{{ url_for('contact') }}" class="translate" data-key="contact">Contact</a></li>
+                <li><a href="{{ url_for('organic') }}" class="translate" data-key="products">Products</a></li>
+                <li><a href="{{ url_for('stored_messages') }}" class="translate" data-key="admin">Admin</a></li>
+                
+            </ul>
+        </div>
+        <div id="google_translate_element" style="margin-left: auto; padding: 10px;"></div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 id="text" class="translate" data-key="headline" data-aos="zoom-in">GET THE CURE ...</h1>
+        <p id="description" class="translate" data-key="description" data-aos="fade-up">
+            Welcome to our innovative agricultural website! We are revolutionizing the way farmers and agricultural 
+            professionals diagnose plant diseases by utilizing the power of machine learning. Our advanced ML model 
+            can detect the disease present in plants with just the image of an infected leaf, making it easier and 
+            faster for you to identify and treat the problem. With our technology, we aim to improve crop health and 
+            increase yields, ultimately contributing to a more sustainable and prosperous agricultural industry.
+        </p>
+        <a href="{{ url_for('upload_page') }}" id="button-text" class="button translate" data-key="get-started" data-aos="flip-up">Get Started</a>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.querySelector(".menu");
+            menu.classList.toggle("active");
+        }
+
+        
+    </script>
+</body>
+</html>

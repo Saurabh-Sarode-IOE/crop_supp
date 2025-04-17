@@ -1,0 +1,117 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    color: #f1f1f1;
+}
+
+/* ========== Navigation Bar ========== */
+.navbar {
+    width: 100%;
+    height: 65px;
+    background: rgba(15, 32, 39, 0.9);
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    justify-content: space-between;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Navbar Scroll Effect */
+.navbar.scrolled {
+    background: rgba(15, 32, 39, 0.95);
+}
+
+/* Logo */
+.logo {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #58d68d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+/* ========== Menu Styling ========== */
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: color 0.3s, transform 0.3s;
+    border-radius: 8px;
+    position: relative;
+}
+
+/* Hover Glow Effect */
+.menu a:hover {
+    color: #58d68d;
+    transform: translateY(-2px);
+}
+
+/* Mobile Menu */
+@media (max-width: 800px) {
+    .menu {
+        position: absolute;
+        top: 65px;
+        right: 0;
+        width: 200px;
+        background: rgba(15, 32, 39, 0.95);
+        flex-direction: column;
+        text-align: center;
+        display: none;
+        border-radius: 8px;
+    }
+
+    .menu.open {
+        display: flex;
+    }
+
+    .menu a {
+        display: block;
+        padding: 12px;
+    }
+}
+
+.mb-4{
+    color: #a69494;
+}
+
+.form-label{
+    color: #ac9494;
+}
+/* Contact Section */
+.contact-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    padding: 20px;
+}
+
+/* Send Button */
+.send-btn {
+    background: #58d68d;
+    color: #0f2027;
+ 
+}
