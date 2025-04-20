@@ -168,18 +168,3 @@ def predict_disease(image_path):
     print(f"📊 Confidence: {confidence:.2%}")
     
     return disease_name, symptoms, causes, cure, treatment, purchase_link, image_url,confidence
-
-# Example usage
-image_path = "test_images/tomato_leaf.jpg"
-disease, symptoms, causes, cure, treatment, purchase_link, image_url, confidence = predict_disease(image_path)
-
-# ✅ Print final results
-print("\n📝 Final Prediction Result:")
-print(f"🍅 Disease: {disease}")
-print(f"📌 Symptoms: {symptoms}")
-print(f"🔍 Causes: {causes}")
-print(f"💊 Cure: {cure}")
-print(f"🛒 Recommended Treatment: {treatment}")
-print(f"🔗 Purchase Here: {purchase_link}")
-print(f"🖼️ Image Path: {image_url}")
-print(f"📊 Confidence: {confidence:.2%}")
