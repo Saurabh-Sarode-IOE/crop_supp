@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from model import predict_disease  # Ensure this is correctly implemented
 from flask_cors import CORS
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 app = Flask(__name__)
 CORS(app)
 
