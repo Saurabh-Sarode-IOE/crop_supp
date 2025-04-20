@@ -1,4 +1,4 @@
-import cv2
+from PIL import Image
 import numpy as np
 from tensorflow.keras.models import load_model
 
@@ -117,14 +117,16 @@ def predict_disease(image_path):
     """
     print(f"🔍 Received image path: {image_path}")
 
-    img = cv2.imread(image_path)
-    if img is None:
-        print("🚨 Error: OpenCV failed to read the image!")
+    try:
+        image = Image.open(image_path).convert("RGB")  # ✅ Read using PIL
+    except Exception as e:
+        print(f"🚨 Error: PIL failed to open image! {e}")
         return "Error", "Could not read image", "Invalid file", "Try another image", "N/A", "N/A", "static/images/default.jpg", 0.0
 
-    img = cv2.resize(img, (224, 224))
-    img = img.astype('float32') / 224.0
-    img = np.expand_dims(img, axis=0)
+    image = image.resize((224, 224))  # ✅ Resize using PIL
+    img = np.array(image).astype('float32') / 224.0  # ✅ Convert to numpy and normalize
+    img = np.expand_dims(img, axis=0)  # ✅ Add batch dimension
+
 
     print(f"📏 Processed image shape: {img.shape}")
 
